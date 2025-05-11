@@ -181,6 +181,33 @@ class BamlAsyncClient:
       )
       return cast(types.TicketClassification, raw.cast_to(types, types, partial_types, False))
     
+    async def ExtractPII(
+        self,
+        document: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.PIIExtraction:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+      raw = await self.__runtime.call_function(
+        "ExtractPII",
+        {
+          "document": document,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(types.PIIExtraction, raw.cast_to(types, types, partial_types, False))
+    
     async def ExtractResume(
         self,
         resume: str,
@@ -207,6 +234,60 @@ class BamlAsyncClient:
         collectors,
       )
       return cast(types.Resume, raw.cast_to(types, types, partial_types, False))
+    
+    async def ExtractTasks(
+        self,
+        meeting_notes: str,
+        baml_options: BamlCallOptions = {},
+    ) -> List[types.Ticket]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+      raw = await self.__runtime.call_function(
+        "ExtractTasks",
+        {
+          "meeting_notes": meeting_notes,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(List[types.Ticket], raw.cast_to(types, types, partial_types, False))
+    
+    async def RAG(
+        self,
+        question: str,context: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.Response:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+      raw = await self.__runtime.call_function(
+        "RAG",
+        {
+          "question": question,"context": context,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(types.Response, raw.cast_to(types, types, partial_types, False))
     
     async def SelectTool(
         self,
@@ -346,6 +427,39 @@ class BamlStreamClient:
         self.__ctx_manager.get(),
       )
     
+    def ExtractPII(
+        self,
+        document: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlStream[partial_types.PIIExtraction, types.PIIExtraction]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+      raw = self.__runtime.stream_function(
+        "ExtractPII",
+        {
+          "document": document,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlStream[partial_types.PIIExtraction, types.PIIExtraction](
+        raw,
+        lambda x: cast(partial_types.PIIExtraction, x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(types.PIIExtraction, x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
+    
     def ExtractResume(
         self,
         resume: str,
@@ -376,6 +490,73 @@ class BamlStreamClient:
         raw,
         lambda x: cast(partial_types.Resume, x.cast_to(types, types, partial_types, True)),
         lambda x: cast(types.Resume, x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
+    
+    def ExtractTasks(
+        self,
+        meeting_notes: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlStream[List[partial_types.Ticket], List[types.Ticket]]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+      raw = self.__runtime.stream_function(
+        "ExtractTasks",
+        {
+          "meeting_notes": meeting_notes,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlStream[List[partial_types.Ticket], List[types.Ticket]](
+        raw,
+        lambda x: cast(List[partial_types.Ticket], x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(List[types.Ticket], x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
+    
+    def RAG(
+        self,
+        question: str,context: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlStream[partial_types.Response, types.Response]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+      raw = self.__runtime.stream_function(
+        "RAG",
+        {
+          "question": question,
+          "context": context,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlStream[partial_types.Response, types.Response](
+        raw,
+        lambda x: cast(partial_types.Response, x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(types.Response, x.cast_to(types, types, partial_types, False)),
         self.__ctx_manager.get(),
       )
     

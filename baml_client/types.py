@@ -40,6 +40,12 @@ def all_succeeded(checks: Dict[CheckName, Check]) -> bool:
 
 
 
+class Priority(str, Enum):
+    
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+
 class TicketLabel(str, Enum):
     
     ACCOUNT = "ACCOUNT"
@@ -58,11 +64,37 @@ class MyUserMessage(BaseModel):
     role: Union[Literal["user"], Literal["assistant"]]
     content: str
 
+class PIIData(BaseModel):
+    index: int
+    dataType: str
+    value: str
+
+class PIIExtraction(BaseModel):
+    privateData: List["PIIData"]
+    containsSensitivePII: bool
+
+class Response(BaseModel):
+    question: str
+    answer: str
+
 class Resume(BaseModel):
     name: str
     email: str
     experience: List[str]
     skills: List[str]
+
+class SubTask(BaseModel):
+    id: int
+    name: str
+
+class Ticket(BaseModel):
+    id: int
+    name: str
+    description: str
+    assignedTo: str
+    priority: "Priority"
+    subTasks: List["SubTask"]
+    dependencies: List[int]
 
 class TicketClassification(BaseModel):
     labels: List["TicketLabel"]

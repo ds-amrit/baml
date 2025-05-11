@@ -115,6 +115,32 @@ class LlmResponseParser:
 
       return cast(types.TicketClassification, parsed)
     
+    def ExtractPII(
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.PIIExtraction:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      parsed = self.__runtime.parse_llm_response(
+        "ExtractPII",
+        llm_response,
+        types,
+        types,
+        partial_types,
+        False,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+      )
+
+      return cast(types.PIIExtraction, parsed)
+    
     def ExtractResume(
         self,
         llm_response: str,
@@ -140,6 +166,58 @@ class LlmResponseParser:
       )
 
       return cast(types.Resume, parsed)
+    
+    def ExtractTasks(
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
+    ) -> List[types.Ticket]:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      parsed = self.__runtime.parse_llm_response(
+        "ExtractTasks",
+        llm_response,
+        types,
+        types,
+        partial_types,
+        False,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+      )
+
+      return cast(List[types.Ticket], parsed)
+    
+    def RAG(
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.Response:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      parsed = self.__runtime.parse_llm_response(
+        "RAG",
+        llm_response,
+        types,
+        types,
+        partial_types,
+        False,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+      )
+
+      return cast(types.Response, parsed)
     
     def SelectTool(
         self,
@@ -256,6 +334,32 @@ class LlmStreamParser:
 
       return cast(partial_types.TicketClassification, parsed)
     
+    def ExtractPII(
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
+    ) -> partial_types.PIIExtraction:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      parsed = self.__runtime.parse_llm_response(
+        "ExtractPII",
+        llm_response,
+        types,
+        types,
+        partial_types,
+        True,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+      )
+
+      return cast(partial_types.PIIExtraction, parsed)
+    
     def ExtractResume(
         self,
         llm_response: str,
@@ -281,6 +385,58 @@ class LlmStreamParser:
       )
 
       return cast(partial_types.Resume, parsed)
+    
+    def ExtractTasks(
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
+    ) -> List[partial_types.Ticket]:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      parsed = self.__runtime.parse_llm_response(
+        "ExtractTasks",
+        llm_response,
+        types,
+        types,
+        partial_types,
+        True,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+      )
+
+      return cast(List[partial_types.Ticket], parsed)
+    
+    def RAG(
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
+    ) -> partial_types.Response:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      parsed = self.__runtime.parse_llm_response(
+        "RAG",
+        llm_response,
+        types,
+        types,
+        partial_types,
+        True,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+      )
+
+      return cast(partial_types.Response, parsed)
     
     def SelectTool(
         self,

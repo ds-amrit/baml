@@ -22,9 +22,9 @@ from .globals import DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIM
 class TypeBuilder(_TypeBuilder):
     def __init__(self):
         super().__init__(classes=set(
-          ["CalculatorAPI","MyUserMessage","Resume","TicketClassification","WeatherAPI",]
+          ["CalculatorAPI","MyUserMessage","PIIData","PIIExtraction","Response","Resume","SubTask","Ticket","TicketClassification","WeatherAPI",]
         ), enums=set(
-          ["TicketLabel","UserMessage",]
+          ["Priority","TicketLabel","UserMessage",]
         ), runtime=DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME)
 
 
@@ -37,8 +37,28 @@ class TypeBuilder(_TypeBuilder):
         return MyUserMessageAst(self)
 
     @property
+    def PIIData(self) -> "PIIDataAst":
+        return PIIDataAst(self)
+
+    @property
+    def PIIExtraction(self) -> "PIIExtractionAst":
+        return PIIExtractionAst(self)
+
+    @property
+    def Response(self) -> "ResponseAst":
+        return ResponseAst(self)
+
+    @property
     def Resume(self) -> "ResumeAst":
         return ResumeAst(self)
+
+    @property
+    def SubTask(self) -> "SubTaskAst":
+        return SubTaskAst(self)
+
+    @property
+    def Ticket(self) -> "TicketAst":
+        return TicketAst(self)
 
     @property
     def TicketClassification(self) -> "TicketClassificationAst":
@@ -132,6 +152,136 @@ class MyUserMessageProperties:
 
     
 
+class PIIDataAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("PIIData")
+        self._properties: typing.Set[str] = set([ "index",  "dataType",  "value", ])
+        self._props = PIIDataProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "PIIDataProperties":
+        return self._props
+
+
+class PIIDataViewer(PIIDataAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class PIIDataProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def index(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("index"))
+
+    @property
+    def dataType(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("dataType"))
+
+    @property
+    def value(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("value"))
+
+    
+
+class PIIExtractionAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("PIIExtraction")
+        self._properties: typing.Set[str] = set([ "privateData",  "containsSensitivePII", ])
+        self._props = PIIExtractionProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "PIIExtractionProperties":
+        return self._props
+
+
+class PIIExtractionViewer(PIIExtractionAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class PIIExtractionProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def privateData(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("privateData"))
+
+    @property
+    def containsSensitivePII(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("containsSensitivePII"))
+
+    
+
+class ResponseAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("Response")
+        self._properties: typing.Set[str] = set([ "question",  "answer", ])
+        self._props = ResponseProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "ResponseProperties":
+        return self._props
+
+
+class ResponseViewer(ResponseAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class ResponseProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def question(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("question"))
+
+    @property
+    def answer(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("answer"))
+
+    
+
 class ResumeAst:
     def __init__(self, tb: _TypeBuilder):
         _tb = tb._tb # type: ignore (we know how to use this private attribute)
@@ -179,6 +329,110 @@ class ResumeProperties:
     @property
     def skills(self) -> ClassPropertyViewer:
         return ClassPropertyViewer(self.__bldr.property("skills"))
+
+    
+
+class SubTaskAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("SubTask")
+        self._properties: typing.Set[str] = set([ "id",  "name", ])
+        self._props = SubTaskProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "SubTaskProperties":
+        return self._props
+
+
+class SubTaskViewer(SubTaskAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class SubTaskProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def id(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("id"))
+
+    @property
+    def name(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("name"))
+
+    
+
+class TicketAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("Ticket")
+        self._properties: typing.Set[str] = set([ "id",  "name",  "description",  "assignedTo",  "priority",  "subTasks",  "dependencies", ])
+        self._props = TicketProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "TicketProperties":
+        return self._props
+
+
+class TicketViewer(TicketAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class TicketProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def id(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("id"))
+
+    @property
+    def name(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("name"))
+
+    @property
+    def description(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("description"))
+
+    @property
+    def assignedTo(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("assignedTo"))
+
+    @property
+    def priority(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("priority"))
+
+    @property
+    def subTasks(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("subTasks"))
+
+    @property
+    def dependencies(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("dependencies"))
 
     
 
@@ -267,6 +521,53 @@ class WeatherAPIProperties:
     
 
 
+
+class PriorityAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.enum("Priority")
+        self._values: typing.Set[str] = set([ "LOW",  "MEDIUM",  "HIGH", ])
+        self._vals = PriorityValues(self._bldr, self._values)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def values(self) -> "PriorityValues":
+        return self._vals
+
+
+class PriorityViewer(PriorityAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    def list_values(self) -> typing.List[typing.Tuple[str, EnumValueViewer]]:
+        return [(name, EnumValueViewer(self._bldr.value(name))) for name in self._values]
+
+
+class PriorityValues:
+    def __init__(self, enum_bldr: EnumBuilder, values: typing.Set[str]):
+        self.__bldr = enum_bldr
+        self.__values = values
+
+    
+
+    @property
+    def LOW(self) -> EnumValueViewer:
+        return EnumValueViewer(self.__bldr.value("LOW"))
+    
+
+    @property
+    def MEDIUM(self) -> EnumValueViewer:
+        return EnumValueViewer(self.__bldr.value("MEDIUM"))
+    
+
+    @property
+    def HIGH(self) -> EnumValueViewer:
+        return EnumValueViewer(self.__bldr.value("HIGH"))
+    
+
+    
 
 class TicketLabelAst:
     def __init__(self, tb: _TypeBuilder):

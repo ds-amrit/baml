@@ -42,11 +42,37 @@ class MyUserMessage(BaseModel):
     role: Optional[Union[Literal["user"], Literal["assistant"]]] = None
     content: Optional[str] = None
 
+class PIIData(BaseModel):
+    index: Optional[int] = None
+    dataType: Optional[str] = None
+    value: Optional[str] = None
+
+class PIIExtraction(BaseModel):
+    privateData: List["PIIData"]
+    containsSensitivePII: Optional[bool] = None
+
+class Response(BaseModel):
+    question: Optional[str] = None
+    answer: Optional[str] = None
+
 class Resume(BaseModel):
     name: Optional[str] = None
     email: Optional[str] = None
     experience: List[str]
     skills: List[str]
+
+class SubTask(BaseModel):
+    id: Optional[int] = None
+    name: Optional[str] = None
+
+class Ticket(BaseModel):
+    id: Optional[int] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+    assignedTo: Optional[str] = None
+    priority: Optional[types.Priority] = None
+    subTasks: List["SubTask"]
+    dependencies: List[int]
 
 class TicketClassification(BaseModel):
     labels: List[types.TicketLabel]
