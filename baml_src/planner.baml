@@ -18,6 +18,7 @@ function GeneratePlan(instructions: string, available_functions: Functions[]) ->
         First break down the problem into smaller tasks.
         Assign each task to a function available in the system.
         Do not assign any task to functions that are not available in the system.
+        If you fail to generate a plan, return an empty list.
     
 
         {{ctx.output_format}}
