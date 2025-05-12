@@ -22,15 +22,23 @@ from .globals import DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIM
 class TypeBuilder(_TypeBuilder):
     def __init__(self):
         super().__init__(classes=set(
-          ["CalculatorAPI","MyUserMessage","PIIData","PIIExtraction","Response","Resume","SubTask","Ticket","TicketClassification","WeatherAPI",]
+          ["Answer","CalculatorAPI","Functions","MyUserMessage","PIIData","PIIExtraction","Response","Resume","Steps","SubTask","Ticket","TicketClassification","WeatherAPI",]
         ), enums=set(
           ["Priority","TicketLabel","UserMessage",]
         ), runtime=DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME)
 
 
     @property
+    def Answer(self) -> "AnswerAst":
+        return AnswerAst(self)
+
+    @property
     def CalculatorAPI(self) -> "CalculatorAPIAst":
         return CalculatorAPIAst(self)
+
+    @property
+    def Functions(self) -> "FunctionsAst":
+        return FunctionsAst(self)
 
     @property
     def MyUserMessage(self) -> "MyUserMessageAst":
@@ -53,6 +61,10 @@ class TypeBuilder(_TypeBuilder):
         return ResumeAst(self)
 
     @property
+    def Steps(self) -> "StepsAst":
+        return StepsAst(self)
+
+    @property
     def SubTask(self) -> "SubTaskAst":
         return SubTaskAst(self)
 
@@ -71,6 +83,44 @@ class TypeBuilder(_TypeBuilder):
 
 
 
+
+class AnswerAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("Answer")
+        self._properties: typing.Set[str] = set([ "answer", ])
+        self._props = AnswerProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "AnswerProperties":
+        return self._props
+
+
+class AnswerViewer(AnswerAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class AnswerProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def answer(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("answer"))
+
+    
 
 class CalculatorAPIAst:
     def __init__(self, tb: _TypeBuilder):
@@ -107,6 +157,48 @@ class CalculatorAPIProperties:
     @property
     def answer(self) -> ClassPropertyViewer:
         return ClassPropertyViewer(self.__bldr.property("answer"))
+
+    
+
+class FunctionsAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("Functions")
+        self._properties: typing.Set[str] = set([ "name",  "description", ])
+        self._props = FunctionsProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "FunctionsProperties":
+        return self._props
+
+
+class FunctionsViewer(FunctionsAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class FunctionsProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def name(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("name"))
+
+    @property
+    def description(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("description"))
 
     
 
@@ -329,6 +421,48 @@ class ResumeProperties:
     @property
     def skills(self) -> ClassPropertyViewer:
         return ClassPropertyViewer(self.__bldr.property("skills"))
+
+    
+
+class StepsAst:
+    def __init__(self, tb: _TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("Steps")
+        self._properties: typing.Set[str] = set([ "step",  "function_name", ])
+        self._props = StepsProperties(self._bldr, self._properties)
+
+    def type(self) -> FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "StepsProperties":
+        return self._props
+
+
+class StepsViewer(StepsAst):
+    def __init__(self, tb: _TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, ClassPropertyViewer]]:
+        return [(name, ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+
+
+
+class StepsProperties:
+    def __init__(self, bldr: ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties
+
+    
+
+    @property
+    def step(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("step"))
+
+    @property
+    def function_name(self) -> ClassPropertyViewer:
+        return ClassPropertyViewer(self.__bldr.property("function_name"))
 
     
 

@@ -57,8 +57,15 @@ class UserMessage(str, Enum):
     SPAM = "SPAM"
     NOT_SPAM = "NOT_SPAM"
 
+class Answer(BaseModel):
+    answer: float
+
 class CalculatorAPI(BaseModel):
     answer: str
+
+class Functions(BaseModel):
+    name: str
+    description: str
 
 class MyUserMessage(BaseModel):
     role: Union[Literal["user"], Literal["assistant"]]
@@ -82,6 +89,10 @@ class Resume(BaseModel):
     email: str
     experience: List[str]
     skills: List[str]
+
+class Steps(BaseModel):
+    step: str
+    function_name: str
 
 class SubTask(BaseModel):
     id: int

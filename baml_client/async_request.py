@@ -37,6 +37,29 @@ class AsyncHttpRequest:
       self.__ctx_manager = ctx_manager
 
     
+    async def Add(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Add",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        False,
+      )
+    
     async def ChatWithLLM(
         self,
         messages: List[types.MyUserMessage],
@@ -99,6 +122,29 @@ class AsyncHttpRequest:
         "ClassifyTicket",
         {
           "ticket": ticket,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        False,
+      )
+    
+    async def Divide(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Divide",
+        {
+          "input": input,
         },
         self.__ctx_manager.get(),
         tb,
@@ -175,6 +221,53 @@ class AsyncHttpRequest:
         False,
       )
     
+    async def GeneratePlan(
+        self,
+        instructions: str,available_functions: List[types.Functions],
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "GeneratePlan",
+        {
+          "instructions": instructions,
+          "available_functions": available_functions,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        False,
+      )
+    
+    async def Multiply(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Multiply",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        False,
+      )
+    
     async def RAG(
         self,
         question: str,context: str,
@@ -215,6 +308,29 @@ class AsyncHttpRequest:
         "SelectTool",
         {
           "message": message,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        False,
+      )
+    
+    async def Subtract(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Subtract",
+        {
+          "input": input,
         },
         self.__ctx_manager.get(),
         tb,
@@ -233,6 +349,29 @@ class AsyncHttpStreamRequest:
       self.__ctx_manager = ctx_manager
 
     
+    async def Add(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Add",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        True,
+      )
+    
     async def ChatWithLLM(
         self,
         messages: List[types.MyUserMessage],
@@ -295,6 +434,29 @@ class AsyncHttpStreamRequest:
         "ClassifyTicket",
         {
           "ticket": ticket,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        True,
+      )
+    
+    async def Divide(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Divide",
+        {
+          "input": input,
         },
         self.__ctx_manager.get(),
         tb,
@@ -371,6 +533,53 @@ class AsyncHttpStreamRequest:
         True,
       )
     
+    async def GeneratePlan(
+        self,
+        instructions: str,available_functions: List[types.Functions],
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "GeneratePlan",
+        {
+          "instructions": instructions,
+          "available_functions": available_functions,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        True,
+      )
+    
+    async def Multiply(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Multiply",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        True,
+      )
+    
     async def RAG(
         self,
         question: str,context: str,
@@ -411,6 +620,29 @@ class AsyncHttpStreamRequest:
         "SelectTool",
         {
           "message": message,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        True,
+      )
+    
+    async def Subtract(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.HTTPRequest:
+      __tb__ = baml_options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = baml_options.get("client_registry", None)
+
+      return await self.__runtime.build_request(
+        "Subtract",
+        {
+          "input": input,
         },
         self.__ctx_manager.get(),
         tb,

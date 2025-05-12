@@ -98,6 +98,33 @@ class BamlSyncClient:
       return BamlSyncClient(self.__runtime, self.__ctx_manager, new_options)
 
     
+    def Add(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.Answer:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.call_function_sync(
+        "Add",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(types.Answer, raw.cast_to(types, types, partial_types, False))
+    
     def ChatWithLLM(
         self,
         messages: List[types.MyUserMessage],
@@ -178,6 +205,33 @@ class BamlSyncClient:
         collectors,
       )
       return cast(types.TicketClassification, raw.cast_to(types, types, partial_types, False))
+    
+    def Divide(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.Answer:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.call_function_sync(
+        "Divide",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(types.Answer, raw.cast_to(types, types, partial_types, False))
     
     def ExtractPII(
         self,
@@ -260,6 +314,60 @@ class BamlSyncClient:
       )
       return cast(List[types.Ticket], raw.cast_to(types, types, partial_types, False))
     
+    def GeneratePlan(
+        self,
+        instructions: str,available_functions: List[types.Functions],
+        baml_options: BamlCallOptions = {},
+    ) -> List[types.Steps]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.call_function_sync(
+        "GeneratePlan",
+        {
+          "instructions": instructions,"available_functions": available_functions,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(List[types.Steps], raw.cast_to(types, types, partial_types, False))
+    
+    def Multiply(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.Answer:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.call_function_sync(
+        "Multiply",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(types.Answer, raw.cast_to(types, types, partial_types, False))
+    
     def RAG(
         self,
         question: str,context: str,
@@ -314,6 +422,33 @@ class BamlSyncClient:
       )
       return cast(Union[types.WeatherAPI, types.CalculatorAPI], raw.cast_to(types, types, partial_types, False))
     
+    def Subtract(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.Answer:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.call_function_sync(
+        "Subtract",
+        {
+          "input": input,
+        },
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+      return cast(types.Answer, raw.cast_to(types, types, partial_types, False))
+    
 
 
 
@@ -326,6 +461,40 @@ class BamlStreamClient:
       self.__ctx_manager = ctx_manager
       self.__baml_options = baml_options or {}
 
+    
+    def Add(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlSyncStream[partial_types.Answer, types.Answer]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.stream_function_sync(
+        "Add",
+        {
+          "input": input,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlSyncStream[partial_types.Answer, types.Answer](
+        raw,
+        lambda x: cast(partial_types.Answer, x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(types.Answer, x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
     
     def ChatWithLLM(
         self,
@@ -426,6 +595,40 @@ class BamlStreamClient:
         raw,
         lambda x: cast(partial_types.TicketClassification, x.cast_to(types, types, partial_types, True)),
         lambda x: cast(types.TicketClassification, x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
+    
+    def Divide(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlSyncStream[partial_types.Answer, types.Answer]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.stream_function_sync(
+        "Divide",
+        {
+          "input": input,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlSyncStream[partial_types.Answer, types.Answer](
+        raw,
+        lambda x: cast(partial_types.Answer, x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(types.Answer, x.cast_to(types, types, partial_types, False)),
         self.__ctx_manager.get(),
       )
     
@@ -531,6 +734,75 @@ class BamlStreamClient:
         self.__ctx_manager.get(),
       )
     
+    def GeneratePlan(
+        self,
+        instructions: str,available_functions: List[types.Functions],
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlSyncStream[List[partial_types.Steps], List[types.Steps]]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.stream_function_sync(
+        "GeneratePlan",
+        {
+          "instructions": instructions,
+          "available_functions": available_functions,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlSyncStream[List[partial_types.Steps], List[types.Steps]](
+        raw,
+        lambda x: cast(List[partial_types.Steps], x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(List[types.Steps], x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
+    
+    def Multiply(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlSyncStream[partial_types.Answer, types.Answer]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.stream_function_sync(
+        "Multiply",
+        {
+          "input": input,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlSyncStream[partial_types.Answer, types.Answer](
+        raw,
+        lambda x: cast(partial_types.Answer, x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(types.Answer, x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
+    
     def RAG(
         self,
         question: str,context: str,
@@ -597,6 +869,40 @@ class BamlStreamClient:
         raw,
         lambda x: cast(Optional[Union[partial_types.WeatherAPI, partial_types.CalculatorAPI]], x.cast_to(types, types, partial_types, True)),
         lambda x: cast(Union[types.WeatherAPI, types.CalculatorAPI], x.cast_to(types, types, partial_types, False)),
+        self.__ctx_manager.get(),
+      )
+    
+    def Subtract(
+        self,
+        input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlSyncStream[partial_types.Answer, types.Answer]:
+      options: BamlCallOptions = {**self.__baml_options, **(baml_options or {})}
+      __tb__ = options.get("tb", None)
+      if __tb__ is not None:
+        tb = __tb__._tb # type: ignore (we know how to use this private attribute)
+      else:
+        tb = None
+      __cr__ = options.get("client_registry", None)
+      collector = options.get("collector", None)
+      collectors = collector if isinstance(collector, list) else [collector] if collector is not None else []
+
+      raw = self.__runtime.stream_function_sync(
+        "Subtract",
+        {
+          "input": input,
+        },
+        None,
+        self.__ctx_manager.get(),
+        tb,
+        __cr__,
+        collectors,
+      )
+
+      return baml_py.BamlSyncStream[partial_types.Answer, types.Answer](
+        raw,
+        lambda x: cast(partial_types.Answer, x.cast_to(types, types, partial_types, True)),
+        lambda x: cast(types.Answer, x.cast_to(types, types, partial_types, False)),
         self.__ctx_manager.get(),
       )
     

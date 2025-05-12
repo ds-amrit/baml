@@ -35,8 +35,15 @@ class StreamState(BaseModel, Generic[T]):
     state: Literal["Pending", "Incomplete", "Complete"]
 
 
+class Answer(BaseModel):
+    answer: Optional[float] = None
+
 class CalculatorAPI(BaseModel):
     answer: Optional[str] = None
+
+class Functions(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
 
 class MyUserMessage(BaseModel):
     role: Optional[Union[Literal["user"], Literal["assistant"]]] = None
@@ -60,6 +67,10 @@ class Resume(BaseModel):
     email: Optional[str] = None
     experience: List[str]
     skills: List[str]
+
+class Steps(BaseModel):
+    step: Optional[str] = None
+    function_name: Optional[str] = None
 
 class SubTask(BaseModel):
     id: Optional[int] = None
